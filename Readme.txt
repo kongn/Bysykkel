@@ -6,4 +6,5 @@ Målet med denna project er å utvikle en applikasjon som visa føljende informasjo
 - Tilgjengelige låser.
 - Ledige sykler.
 
-Appliksjonen utviklas med javaScript.
+Appliksjonen utviklas med javaScript som en front-end løsning.
+Vennligst følg instruksjoner nedan for å kjøre koden:
