@@ -11,7 +11,8 @@ Vennligst følg instruksjoner nedan for å kjøre koden:
 
 1. øppna filen: sykkelstativ.html
 	- kopiera hela innehållet av filen.
-2. Lim in (Paste) innehållet i en editor exp. Atom eller brackets osv..
+2. Lim in (Paste) innehållet i en editor exp. Atom eller brackets osv.., spara som en html fil.
+   (Hovsaken er å koden sparas i en html fil)
 
 3. Før å denna appen skulle kunna fungera så må man modifiera nettlesern så å dess sikkerhetssystem (CORS) avaktiveras,
    på den måten så klara den til å kunna kommunicera med deres API. Denna configurasjon steg er nødvendig ettersom 
