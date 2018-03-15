@@ -4,15 +4,18 @@
     <meta charset="utf-8">  
     <meta name="description" content="sykkelstativer">  
     <meta name="author" content="Cuong Nguyen">
+    
     <title>Sykkelstativer | API</title>
+    <style>
+      div{ margin: 10px;} 
+    
+    </style>
+    
   </head>
 
   <body>
     <h2>Bysykkel Applikasjon</h2>  
-    <div ><button type="button" onclick="loadDoc()">Sykkelstativ Lista</button></div>  
-    <br>
     <div id="demo"></div>
-    <div id="demo2"></div>
 
     <script>
       function loadDoc() {
@@ -20,27 +23,78 @@
         xhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
             var myData = JSON.parse(this.responseText);
-            console.log(myData);
+            //console.log(myData);
             var show = document.getElementById("demo");
             for(var i = 0; i < myData.stations.length; i++){ 
 
-              show.innerHTML += 
-                "<strong>Stasjon: </strong>" + myData.stations[i]["title"] + myData.stations[i]["id"] + "<br>" +
-                "<strong>Lokasjon: </strong>" + myData.stations[i]["subtitle"] + "<br>" +
-                "<strong>Tilgjengelige låser: </strong>" + myData.stations[i]["number_of_locks"] + "<br>" + 
-                "<strong> Antalet Ledige: </strong>" + myData.stations[i]["availability"] + "<br>" + 
-                "<br>" ; 
-              
-             console.log(myData.stations[i].title);
-            }      
+              show.innerHTML += "<div id='d"+myData.stations[i]["id"]+"'>" +
+                "<strong>Stasjon: </strong>" + myData.stations[i]["title"] + "<br>" +
+                "<strong>Lokasjon: </strong>" + myData.stations[i]["subtitle"] + "<br>";               
+//             console.log(myData.stations[i].title);
+//           "<strong>Tilgjengelige låser: </strong>" + myData.stations[i]["number_of_locks"] + "<br>" + 
+//                "<strong> Antalet Ledige: </strong>"
+//                "</div>" + 
+            }   
+           
+            loadDoc2();
+            "<br>";
           }
         };
 
       xhttp.open("GET", "https://oslobysykkel.no/api/v1/stations", true);
       xhttp.setRequestHeader("Client-Identifier", "cfad97d22da4cde6a2a0fe42f1f235fb");
       xhttp.send();
-    }    
+    }  
       
+      //ant---ferdig der oppe fiks load 2 let etter dom objektene og innerhtml += "something"
+      function loadDoc2() {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              var myData = JSON.parse(this.responseText);
+              //er her XD
+               var myArray = myData.stations;
+              console.log(document.getElementById("d10000"));
+//              var id=document.getElementById("id").innerHTML += myArray[0].availability.locks; "<br>" ;
+              // FINN DIV MED ID d157 XDXDXDXD
+              // hent den og forandre innerHTML             
+              // du tar in en id som du ikke vet om den finnes, og du prøver å hente den fra DOM
+              
+//              myArray[i].id     <  ----------------   en id som du ikke vet noe om, må teste den om den finnes eller ei
+              
+              
+              
+//              document.getElementById("d"+myArray[6].id).innerHTML += 
+//                "<strong>Tilgjengelige låser: </strong>" + myArray[6].availability.locks + "<br>" +
+//                "<strong>Ledige Sykler: </strong>" + myArray[6].availability.bikes + "<br>"  ; 
+//              console.log(myArray[6].availability.bikes);
+              for(i=0; i<myArray.length; i++){
+//                  
+//                i første omgang hent en div element fra dom
+//                
+//              gjenbruk variabelen obj.
+                var obj = document.getElementById("d"+myArray[i].id);
+                if(obj != null){
+//                    hvis den er ikke null ->  så kommer den hit
+                  obj.innerHTML += 
+                "<strong>Tilgjengelige låser: </strong>" + myArray[i].availability.locks + "<br>" +
+                "<strong>Ledige Sykler: </strong>" + myArray[i].availability.bikes + "<br>"; 
+//              console.log(myArray[i].availability.bikes);
+                  
+                } 
+                
+              }
+            }
+          };
+
+          xhttp.open("GET", "https://oslobysykkel.no/api/v1/stations/availability", true);
+          xhttp.setRequestHeader("Client-Identifier", "cfad97d22da4cde6a2a0fe42f1f235fb");
+          xhttp.send();
+      }  
+      
+      loadDoc();
     </script>
+    
+    
   </body>
 </html>
