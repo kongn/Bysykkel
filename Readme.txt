@@ -14,8 +14,8 @@ Vennligst følg instruksjoner nedan for å kjøre koden:
 2. Lim in (Paste) innehållet i en editor exp. Atom eller brackets osv.., spara som en html fil.
    (Hovedsaken er å koden sparas i en html fil).
 
-3. Add deres client identifier unique string på to stede i koden. Erstatte " unique string " med deres unique string som visas nedan.
-   Husk det er to stede i koden som ska gjøras.
+3. Adda deres client identifier unique string på to stede i koden. Erstatte " unique string " med deres egna unique string som visas nedan.
+   Husk det er to stede i koden som ska erstattes (ved linje 31 og linje 51).
    xhttp.setRequestHeader("Client-Identifier", " unique string ");
 
 4. Før å denna appen skulle kunna fungera så må man modifiera nettlesern så å dess sikkerhetssystem (CORS) avaktiveras,
