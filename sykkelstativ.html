@@ -1,47 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
+  <meta charset="utf-8">  
   <meta name="description" content="sykkelstativer">  
-  <meta name="author" content="David Kong">
+  <meta name="author" content="Cuong Nguyen">
   <title>Sykkelstativer | API</title>
-  <link rel="stylesheet" href="./css/style.css">
-<!--
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Cinzel|Merriweather|Titillium+Web" rel="stylesheet">
--->  
-  </head>
+
+</head>
 <body>
-    <div id="result"></div>
-    
-  <script>
 
-  var getJSON = function(url) {
-  return new Promise(function(resolve, reject) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('get', url, true);
-    xhr.responseType = 'json';
-    xhr.onload = function() {
-      var status = xhr.status;
-      if (status == 200) {
-        resolve(xhr.response);
-      } else {
-        reject(status);
-      }
-    };
-    xhr.send();
-  });
-};
+  <h2>Bysykkel Applikasjon</h2>  
+  <div ><button type="button" onclick="loadDoc(), loadDoc2()">Sykkelstativ Lista</button></div>  
+  <br>
+  <div id="demo"></div>
+  <div id="demo2"></div>
 
-getJSON('https://oslobysykkel.no/api/v1/stations').then(function(data) {
-    alert('Your Json result is:  ' + data.result); //you can comment this, i used it to debug
 
-    result.innerText = data.result; //display the result in an HTML element
-}, function(status) { //error detection....
-  alert('Something went wrong.');
-});
-    
+
+<script>
+  function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    	var myData = JSON.parse(this.responseText);
+      console.log(myData);
+      var show = document.getElementById("demo");
+      for(var i = 0; i < myData.stations.length; i++){        
+        show.innerHTML = 
+          "<strong>Stasjon:</strong>" + myData.stations[i]["title"] + myData.stations[i]["id"] + "<br>" +
+          "<strong>Lokasjon:</strong>" + myData.stations[i]["subtitle"] + "<br>" +
+          "<strong>Tilgjengelige låser:</strong>" + myData.stations[i]["number_of_locks"] + "<br>" + 
+          "<strong> Antalet Ledige: </strong>" + myData.stations[i]["availability"] + "<br>" + 
+          "<br>"  ;   
+       console.log(myData.stations[i].title);
+
+      }      
+    }
+  };
+  
+  // du må hente availability også, så 2 XMLHttpRequest
+  xhttp.open("GET", "https://oslobysykkel.no/api/v1/stations", true);
+  xhttp.setRequestHeader("Client-Identifier", "cfad97d22da4cde6a2a0fe42f1f235fb");
+  xhttp.send();
+}
+  // bytt navn til det du liker senere
+function loadDoc2() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    	var myData = JSON.parse(this.responseText);
+      console.log(myData);
+//      document.getElementById("demo").innerHTML = myData;
+      //for(var i = 0; i < myData2.stations.length; i++){
+        var array = myData.stations[1];
+        
+        document.getElementById("demo2").innerHTML = 
+          myData.stations[1]["availability"]["id"]; 
+      
+    }
+  };
+  
+  xhttp.open("GET", "https://oslobysykkel.no/api/v1/stations/availability", true);
+  xhttp.setRequestHeader("Client-Identifier", "cfad97d22da4cde6a2a0fe42f1f235fb");
+  xhttp.send();
+}
+  
 </script>
 
 
